@@ -4,7 +4,16 @@
     <div style="font-size: 40px">Weather Updates</div>
   </mat-toolbar>
   <!-- Task 1: Add your HTML part here -->
+  <div class="seacrh-box">
+    <div class="search">
+      <mat-form-field class="search-field">
+        <mat-label> Search by city name or area zip code </mat-label>
+        <input matInput [(ngModel)]="userInput" placeholder="Search by city name or area zip code" />
+      </mat-form-field>
 
+      <button class="search-button" (click)="searchWeather()">Search</button>
+    </div>
+  </div>
   <!-- Task 5+9: Add your HTML part here -->
 
 
