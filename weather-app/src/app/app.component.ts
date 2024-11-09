@@ -19,7 +19,7 @@ export class AppComponent {
   $data!: Observable<CurrentWeather>;
   errorMessage: string = '';
   // Task 6: Declare your variables here
-
+  backgroundImageUrl = '';
   // Task 7: Declare your variables here
 
   // Task 8: Declare your variables here
@@ -61,7 +61,34 @@ export class AppComponent {
       })
     );
     // Task 6: Add your logic here
+    this.backgroundImageUrl = '';
 
+    this.$data.subscribe({
+      next: (data: any) => {
+        switch (true) {
+          case data.description.includes('clear') || data.description.includes('sun'):
+            this.backgroundImageUrl = 'assets/sunny.jpg';
+            break;
+          case data.description.includes('cloud') :
+            this.backgroundImageUrl = 'assets/clouds.jpg';
+            break;
+          case data.description.includes('rain') || data.description.includes('drizzle'):
+              this.backgroundImageUrl = 'assets/rain.jpg';
+            break;
+          case data.description.includes('haze'):
+            this.backgroundImageUrl = 'assets/haze.jpg'; // Use an appropriate hazy image
+            break;
+          case data.description.includes('fog'):
+            this.backgroundImageUrl = 'assets/fog.jpg'; // Use an appropriate hazy image
+            break;
+          case data.description.includes('snow'):
+            this.backgroundImageUrl = 'assets/snow.jpg'; // Use an appropriate hazy image
+            break;
+          default:
+            this.backgroundImageUrl = 'assets/regularday.jpg';
+        }
+      },
+    });
     // Task 8: Empty the date data here
 
     this.forcastWeather();
