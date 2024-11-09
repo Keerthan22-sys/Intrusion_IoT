@@ -1,6 +1,6 @@
 <!-- Task 6: Add dynamic background in the following div -->
 <div class="main-container" [style.background-image]="'url(' + backgroundImageUrl + ')'">
-  
+
 <div class="main-container">
   <mat-toolbar class="weather-toolbar">
     <div style="font-size: 40px">Weather Updates</div>
@@ -17,14 +17,7 @@
     </div>
   </div>
   <!-- Task 5+9: Add your HTML part here -->
-  <div *ngIf="errorMessage != ''" class="weather-container">
-    <h1 class="weather-info" style="padding: 40px; width: 60%">
-      {{ errorMessage }}
-    </h1>
-  </div>
-
-  <!-- Task 9 start here -->
-  <div *ngIf="errorMessage == ''" id="weather-data-display">
+<div *ngIf="errorMessage == ''" id="weather-data-display">
     <div *ngIf="$data | async as weatherData" class="weather-container">
       <div class="weather-info" id="weather">
         <div class="city-country">
@@ -60,9 +53,46 @@
             <td>{{ weatherData.windSpeed }} m/s</td>
           </tr>
         </table>
+
+        <div class="forecast-cards">
+          <div *ngFor="let day of forecastDays">
+            <button mat-raised-button class="date-card" style="margin-right:10px ;">
+              <p (click)="showTimeline(day)">{{day | date:'MMM d'}}</p>
+            </button>
+          </div>
+
+        </div>
+        <div style="display: flex; margin-top: 10px;">
+
+          <mat-stepper #stepper style="background: transparent !important; justify-content: center"
+            *ngIf="timelineData != []">
+            <mat-step *ngFor="let item of timelineData; let i = index">
+              <ng-template matStepLabel>
+                <div>
+                  {{ item.dt | date : "shortTime" }}
+                </div>
+              </ng-template>
+              <div class="weather-tooltip">
+                <div class="inner-block">
+                  <div class="left-block">
+                    <div class="temp">{{ item.main.temp }} °C</div>
+                    <div class="wdesc">{{ item.weather[0].description }}</div>
+                  </div>
+                  <div class="right-block">
+                    <div>
+                      <span class="indent">Feels Like: </span>{{ item.main.feels_like }} °C
+                    </div>
+                    <div>
+                      <span class="indent">Wind Speed: </span>{{ item.wind.speed }} m/s
+                    </div>
+                  </div>
+                </div>
+                <div id="tt-arrow" class="arrow" style="left: 553px"></div>
+              </div>
+            </mat-step>
+          </mat-stepper>
+        </div>
       </div>
     </div>
   </div>
-
-</div>
 

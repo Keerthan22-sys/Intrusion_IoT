@@ -117,7 +117,7 @@ export class AppComponent {
 
   showTimeline(date: any) {
     // Task 8: Add your code here
-    this.timelineData = this.groupedForecasts[date]
+    this.timelineData = this.groupedForecasts[date];
   }
 
 }
