@@ -21,7 +21,8 @@ export class AppComponent {
   // Task 6: Declare your variables here
   backgroundImageUrl = '';
   // Task 7: Declare your variables here
-
+  forecastDays: any;
+  groupedForecasts: { [date: string]: any[] } = {};
   // Task 8: Declare your variables here
 
 
@@ -96,7 +97,22 @@ export class AppComponent {
 
   forcastWeather() {
     // Task 7: Add your code here
-
+    this.groupedForecasts = {}
+    const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${this.userInput}&cnt=40&units=metric&appid=${environment.key}`;
+    this.http.get(forecastURL).subscribe({
+      next: (data: any) => {
+        data.list.forEach((item: any) => {
+          const date = new Date(item.dt * 1000).toDateString();
+          if (!this.groupedForecasts[date]) {
+            this.groupedForecasts[date] = [];
+          }
+          item.dt = this.datePipe.transform(new Date(item.dt * 1000), 'medium');
+          this.groupedForecasts[date].push(item);
+        });
+        // convert grouped forecasts to an array to store the 5-days' dates
+        this.forecastDays = Object.keys(this.groupedForecasts).map((date) => (date));
+      },
+    });
   }
 
   showTimeline(date: any) {
