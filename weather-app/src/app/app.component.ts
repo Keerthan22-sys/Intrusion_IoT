@@ -24,7 +24,7 @@ export class AppComponent {
   forecastDays: any;
   groupedForecasts: { [date: string]: any[] } = {};
   // Task 8: Declare your variables here
-
+  timelineData: any = [];
 
   constructor(private http: HttpClient, private datePipe: DatePipe) {}
   ngOnInit() {
@@ -91,7 +91,7 @@ export class AppComponent {
       },
     });
     // Task 8: Empty the date data here
-
+    this.timelineData = []
     this.forcastWeather();
   }
 
@@ -117,7 +117,7 @@ export class AppComponent {
 
   showTimeline(date: any) {
     // Task 8: Add your code here
-
+    this.timelineData = this.groupedForecasts[date]
   }
 
 }
