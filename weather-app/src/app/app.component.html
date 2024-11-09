@@ -15,7 +15,52 @@
     </div>
   </div>
   <!-- Task 5+9: Add your HTML part here -->
+  <div *ngIf="errorMessage != ''" class="weather-container">
+    <h1 class="weather-info" style="padding: 40px; width: 60%">
+      {{ errorMessage }}
+    </h1>
+  </div>
 
+  <!-- Task 9 start here -->
+  <div *ngIf="errorMessage == ''" id="weather-data-display">
+    <div *ngIf="$data | async as weatherData" class="weather-container">
+      <div class="weather-info" id="weather">
+        <div class="city-country">
+          <h2 style="margin: 0px;">{{ weatherData.name }}, {{ weatherData.country }}</h2>
+          <div style="display: flex;">
+            <p>Weather: &nbsp;</p>
+            <p style="color: #c3cbd2">
+              {{ weatherData.description | titlecase }}
+            </p>
+          </div>
+          <div style="display: flex;">
+            <p>Time: &nbsp;</p>
+            <p style="color: #c3cbd2">{{ weatherData.dt }}</p>
+          </div>
+
+        </div>
+
+        <table class="details-table">
+          <tr>
+            <th>Temperature</th>
+            <td>{{ weatherData.degTemp }}°C</td>
+          </tr>
+          <tr>
+            <th>Feels like</th>
+            <td>{{ weatherData.feelsLikeTemp }}°C</td>
+          </tr>
+          <tr>
+            <th>Visibility</th>
+            <td>{{ weatherData.visibility / 10 }} km</td>
+          </tr>
+          <tr>
+            <th>Wind Speed</th>
+            <td>{{ weatherData.windSpeed }} m/s</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 
 </div>
 
